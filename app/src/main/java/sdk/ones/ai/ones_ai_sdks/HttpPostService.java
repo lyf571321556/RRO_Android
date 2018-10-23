@@ -3,7 +3,7 @@ package sdk.ones.ai.ones_ai_sdks;
 
 import java.util.List;
 
-import ai.ones.network.wrapresult.ResponseEntity;
+import ai.ones.network.wrapresult.ResponseResult;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 public interface HttpPostService {
 
     @FormUrlEncoded
-    @POST("AppFiftyToneGraph/videoLink")
-    Observable<ResponseEntity<List<SubjectResulte>>> getAllVedioBys(@Field("once") boolean once_no);
+    @POST("AppFiftyToneGraph/videoLink1")
+    Observable<ResponseResult<List<SubjectResulte>>> getAllVedioBys(@Field("once") boolean once_no);
 
 }

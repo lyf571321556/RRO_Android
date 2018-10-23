@@ -9,7 +9,7 @@ import java.lang.ref.SoftReference;
 
 import ai.ones.network.exception.HttpTimeException;
 import ai.ones.network.htttp.listener.HttpOnNextListener;
-import ai.ones.network.wrapresult.ResponseEntity;
+import ai.ones.network.wrapresult.ResponseResult;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
@@ -18,7 +18,7 @@ import retrofit2.Retrofit;
  * 请求数据统一封装类
  * Created by WZG on 2016/7/16.
  */
-public abstract class BaseRequest<T> implements Function<ResponseEntity<T>, T> {
+public abstract class BaseRequest<T> implements Function<ResponseResult<T>, T> {
     //rx生命周期管理
 //    private SoftReference<RxAppCompatActivity> rxAppCompatActivity;
     private LifecycleProvider<Lifecycle.Event> lifecycleProvider;
@@ -194,13 +194,16 @@ public abstract class BaseRequest<T> implements Function<ResponseEntity<T>, T> {
 //    }
 
     @Override
-    public T apply(ResponseEntity<T> httpResult) {
+    public T apply(ResponseResult<T> httpResult) {
         if (httpResult.getRet() == 0) {
             throw new HttpTimeException(httpResult.getMsg());
         }
         return httpResult.getData();
     }
 
+    public T parseNetworkResponse(){
+
+    }
 
     public String getCacheUrl() {
         return cacheUrl;

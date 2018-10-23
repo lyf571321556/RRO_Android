@@ -30,7 +30,7 @@ public class SubjectPostApi extends BaseRequest {
         setShowProgress(true);
         setCancel(true);
         setCache(false);
-        setMethod("AppFiftyToneGraph/videoLink");
+        setMethod("AppFiftyToneGraph/videoLink11");
         setCookieNetWorkTime(60);
         setCookieNoNetWorkTime(24 * 60 * 60);
     }

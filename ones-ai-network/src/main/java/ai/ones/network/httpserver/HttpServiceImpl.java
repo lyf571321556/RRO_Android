@@ -1,12 +1,7 @@
 package ai.ones.network.httpserver;
 
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 
-import java.lang.ref.SoftReference;
-
-import ai.ones.network.exception.RetryWhenNetworkException;
-import ai.ones.network.htttp.listener.HttpOnNextListener;
 import ai.ones.network.okhttp.OkHttpClientManager;
 import ai.ones.network.request.BaseRequest;
 import ai.ones.network.response.ProgressSubscriber;
@@ -40,29 +35,33 @@ public class HttpServiceImpl implements IHttpService {
 
         ProgressSubscriber subscriber = new ProgressSubscriber(request);
         Observable observable = request.getObservable(retrofit)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(request);
                 /*失败后的retry配置*/
-                .retryWhen(new RetryWhenNetworkException(request.getRetryCount(),
-                        request.getRetryDelay(), request.getRetryIncreaseDelay()));
-        if (request.getLifecycleProvider() != null) {
-            observable.compose(request.getLifecycleProvider().bindUntilEvent(Lifecycle.Event.ON_DESTROY));
-        }
+//                .retryWhen(new RetryWhenNetworkException(request.getRetryCount(),
+//                        request.getRetryDelay(), request.getRetryIncreaseDelay()));
+//        if (request.getLifecycleProvider() != null) {
+//            observable.compose(request.getLifecycleProvider().bindUntilEvent(Lifecycle.Event.ON_DESTROY));
+//        }
         /*生命周期管理*/
 //                .compose(basePar.getRxAppCompatActivity().bindToLifecycle())
 //                .compose(request.getRxAppCompatActivity().bindUntilEvent(ActivityEvent.PAUSE))
         /*http请求线程*/
-        observable.subscribeOn(Schedulers.io());
-        observable.unsubscribeOn(Schedulers.io());
-        /*回调线程*/
-        observable.observeOn(AndroidSchedulers.mainThread());
+//        observable.subscribeOn(Schedulers.io());
+//        observable.unsubscribeOn(Schedulers.io());
+//        /*回调线程*/
+//        observable.observeOn(AndroidSchedulers.mainThread()).map(request);
         /*结果判断*/
-        observable.map(request);
+//        observable.map(request);
 
 
-        /*链接式对象返回*/
-        SoftReference<HttpOnNextListener> httpOnNextListener = request.getListener();
-        if (httpOnNextListener != null && httpOnNextListener.get() != null) {
-            httpOnNextListener.get().onNext(observable);
-        }
+//        /*链接式对象返回*/
+//        SoftReference<HttpOnNextListener> httpOnNextListener = request.getListener();
+//        if (httpOnNextListener != null && httpOnNextListener.get() != null) {
+//            httpOnNextListener.get().onNext(observable);
+//        }
 
         /*数据回调*/
         observable.subscribe(subscriber);

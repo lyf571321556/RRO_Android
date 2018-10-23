@@ -14,6 +14,7 @@ import okhttp3.Interceptor;
 
 
 public class OkHttpClientManager {
+
     private static OkHttpClientManager OkHttpClientManager;
     private IHttpClient mHttpClient;
 
@@ -49,7 +50,8 @@ public class OkHttpClientManager {
             if (okHttpClientManager.getCacheDnsDir() != null) {
                 okHttpDnsBuilder.setCacheDnsDir(okHttpClientManager.getCacheDnsDir());
                 okHttpDnsBuilder.setHttpDnsUrl(okHttpClientManager.getHttpDnsUrl());
-                okHttpDnsBuilder.getInterceptors().addAll(okHttpClientManager.getOtherInterceptors());
+                okHttpDnsBuilder.getInterceptors().addAll(okHttpClientManager
+                        .getOtherInterceptors());
             }
 
             if (StethoManager.getStethoInterceptor() != null) {
@@ -59,7 +61,7 @@ public class OkHttpClientManager {
             if (StethoManager.getHttpLoggingInterceptor() != null) {
                 okHttpDnsBuilder.addInterceptor(StethoManager.getHttpLoggingInterceptor());
             }
-            okHttpClientBuilder.setIHttpDns(okHttpDnsBuilder.build());
+            //okHttpClientBuilder.setIHttpDns(okHttpDnsBuilder.build());
         }
 
 
@@ -79,10 +81,6 @@ public class OkHttpClientManager {
 
     /**
      * 执行同步请求
-     *
-     * @param request
-     * @return
-     * @throws IOException
      */
     public okhttp3.Response executeRequest(okhttp3.Request request) throws IOException {
         return mHttpClient.executeRequest(request);
@@ -90,9 +88,6 @@ public class OkHttpClientManager {
 
     /**
      * 执行异步请求
-     *
-     * @param request
-     * @param callback
      */
     public void asyExecuteRequest(okhttp3.Request request, Callback callback) {
         mHttpClient.asyExecuteRequest(request, callback);
@@ -105,6 +100,7 @@ public class OkHttpClientManager {
 
 
     public static final class Builder {
+
         private List<Interceptor> otherInterceptors = new ArrayList<>();
         private String httpDnsUrl;
         private File cacheDnsDir;
@@ -131,8 +127,6 @@ public class OkHttpClientManager {
 
         /**
          * 不为空开启
-         *
-         * @param httpDnsUrl
          */
         public Builder setHttpDnsUrl(String httpDnsUrl) {
             this.httpDnsUrl = httpDnsUrl;
@@ -152,9 +146,6 @@ public class OkHttpClientManager {
 
         /**
          * 添加自定义拦截器
-         *
-         * @param interceptor
-         * @return
          */
         public Builder addInterceptor(Interceptor interceptor) {
             otherInterceptors.add(interceptor);

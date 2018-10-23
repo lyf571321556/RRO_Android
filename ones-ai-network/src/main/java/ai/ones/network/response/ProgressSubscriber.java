@@ -182,10 +182,10 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> {
          } else {
          Toast.makeText(context, "错误" + e.getMessage(), Toast.LENGTH_SHORT).show();
          }
-         if (mSubscriberOnNextListener.get() != null) {
-         mSubscriberOnNextListener.get().onError(e);
-         }
          */
+        if (mSubscriberOnNextListener.get() != null) {
+            mSubscriberOnNextListener.get().onError(e);
+        }
     }
 
     /**

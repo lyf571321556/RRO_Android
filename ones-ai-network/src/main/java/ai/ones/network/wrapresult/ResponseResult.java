@@ -4,7 +4,7 @@ package ai.ones.network.wrapresult;
  * 回调信息统一封装类
  * Created by WZG on 2016/7/16.
  */
-public class ResponseEntity<T> {
+public class ResponseResult<T> {
     //  判断标示
     private int ret;
     //    提示信息

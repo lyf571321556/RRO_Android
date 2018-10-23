@@ -3,13 +3,18 @@ package sdk.ones.ai.ones_ai_sdks;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.List;
 
 import ai.ones.network.NetManager;
 import ai.ones.network.htttp.listener.HttpOnNextListener;
+import ai.ones.network.okhttp.OkHttpClientManager;
+import ai.ones.network.response.ProgressSubscriber;
+import ai.ones.network.wrapresult.ResponseResult;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,5 +58,30 @@ public class MainActivity extends AppCompatActivity {
         SubjectPostApi postEntity = new SubjectPostApi(simpleOnNextListener);
         postEntity.setAll(true);
         NetManager.getInstance(this).asyExecuteRequest(postEntity);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(OkHttpClientManager.getInstance(this).getOkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl("https://www.izaodao.com/Api/")
+                .build();
+
+        postEntity.getObservable(retrofit).subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new ProgressSubscriber<ResponseResult<List<SubjectResulte>>>(postEntity) {
+
+            @Override
+            public void onNext(ResponseResult<List<SubjectResulte>> responseBody) {
+                System.out.println("onCancel");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("onCancel");
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("onCancel");
+            }
+        });
     }
 }
