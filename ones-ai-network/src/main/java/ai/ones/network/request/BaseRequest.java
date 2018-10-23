@@ -5,6 +5,7 @@ import android.arch.lifecycle.Lifecycle;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 
 import ai.ones.network.exception.HttpTimeException;
@@ -12,13 +13,14 @@ import ai.ones.network.htttp.listener.HttpOnNextListener;
 import ai.ones.network.wrapresult.ResponseResult;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
 /**
  * 请求数据统一封装类
  * Created by WZG on 2016/7/16.
  */
-public abstract class BaseRequest<T> implements Function<ResponseResult<T>, T> {
+public abstract class BaseRequest<T> implements Function<ResponseBody, T> {
     //rx生命周期管理
 //    private SoftReference<RxAppCompatActivity> rxAppCompatActivity;
     private LifecycleProvider<Lifecycle.Event> lifecycleProvider;
@@ -194,15 +196,18 @@ public abstract class BaseRequest<T> implements Function<ResponseResult<T>, T> {
 //    }
 
     @Override
-    public T apply(ResponseResult<T> httpResult) {
+    public T apply(ResponseBody responseBody) {
         if (httpResult.getRet() == 0) {
             throw new HttpTimeException(httpResult.getMsg());
+
         }
         return httpResult.getData();
     }
 
-    public T parseNetworkResponse(){
+    public T parseNetworkResponse(ResponseBody responseBody) throws IOException {
+        String result = new String(responseBody.bytes(), "UTF-8");
 
+        return null;
     }
 
     public String getCacheUrl() {
