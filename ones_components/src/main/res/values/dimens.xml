@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--v10 通用字体大小-->
+    <dimen name="common_font_fs0">19sp</dimen>
+    <dimen name="common_font_fs1">18sp</dimen>
+    <dimen name="common_font_fs2">17sp</dimen>
+    <dimen name="common_font_fs3">16sp</dimen>
+    <dimen name="common_font_fs4">15sp</dimen>
+    <dimen name="common_font_fs5">14sp</dimen>
+    <dimen name="common_font_fs6">13sp</dimen>
+    <dimen name="common_font_fs7">12sp</dimen>
+    <dimen name="common_font_fs8">11sp</dimen>
+    <dimen name="common_font_fs9">10sp</dimen>
+    <dimen name="common_font_fs10">9sp</dimen>
+    <dimen name="common_font_fs11">20sp</dimen>
+
+</resources>

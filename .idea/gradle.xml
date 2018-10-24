@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/ones-ai-network" />
+            <option value="$PROJECT_DIR$/ones_components" />
+            <option value="$PROJECT_DIR$/ones_utils" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

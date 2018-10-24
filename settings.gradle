@@ -1,1 +1,1 @@
-include ':app', ':ones-ai-network'
+include ':app', ':ones-ai-network',':ones_components', ':ones_utils'
